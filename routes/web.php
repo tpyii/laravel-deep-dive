@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,18 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
-Route::get('/hello/{name}', function (string $name) {
-    echo "Привет, {$name}!";
-});
+Route::view('signin', 'signin')->name('signin');
 
-Route::get('/info', function () {
-    echo 'Страница с информацие о проекте.';
-});
+Route::resource('categories', CategoriesController::class);
 
-Route::get('/news/{id}', function (int $id) {
-    echo "<h1>Новость №{$id}</h1><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum beatae vel dicta quo ut autem, temporibus id consectetur eaque atque ipsum facilis suscipit omnis dolores obcaecati labore quam. Quisquam, repellendus?</p>";
+Route::resource('news', NewsController::class);
+
+Route::resource('category.news', NewsController::class)->shallow();
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+], function ()
+{
+    Route::resource('news', AdminNewsController::class);
 });
