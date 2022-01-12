@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', [
-            'news' => $this->getNews(),
+        return view('admin.categories.index', [
+            'categories' => $this->getCategories(),
         ]);
     }
 
@@ -26,7 +26,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('admin.categories.create');
     }
 
     /**
