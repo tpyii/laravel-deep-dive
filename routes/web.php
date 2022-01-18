@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 |
 */
 
-Route::view('/', 'welcome');
+Route::view('/', 'welcome')->name('welcome');
 
 Route::view('signin', 'signin')->name('signin');
 
@@ -31,5 +32,9 @@ Route::group([
     'as' => 'admin.',
 ], function ()
 {
+    Route::view('/', 'admin.welcome')->name('welcome');
+
+    Route::resource('categories', AdminCategoriesController::class);
+
     Route::resource('news', AdminNewsController::class);
 });
