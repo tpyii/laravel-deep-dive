@@ -11,6 +11,8 @@
           <ul class="list-unstyled">
             <li><a href="{{ route('news.index') }}" class="text-white">News</a></li>
             <li><a href="{{ route('categories.index') }}" class="text-white">Categories</a></li>
+            <li><a href="{{ route('order.create') }}" class="text-white">Create an Order</a></li>
+            <li><a href="{{ route('feedback.create') }}" class="text-white">Feedback</a></li>
             <li><a href="{{ route('signin') }}" class="text-white">Sign in</a></li>
           </ul>
         </div>
