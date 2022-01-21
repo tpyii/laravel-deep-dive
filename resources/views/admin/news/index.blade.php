@@ -12,17 +12,25 @@
           <th scope="col">#</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
+          <th scope="col">Author</th>
+          <th scope="col">Status</th>
           <th scope="col">Category</th>
+          <th scope="col">Created at</th>
+          <th scope="col">Updated at</th>
         </tr>
       </thead>
       <tbody>
 
         @foreach($news as $item)
           <tr>
-            <td>{{ $item['id'] }}</td>
-            <td>{{ $item['title'] }}</td>
-            <td>{{ $item['description'] }}</td>
-            <td>{{ $item['category']['title'] }}</td>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->title }}</td>
+            <td>{{ $item->description }}</td>
+            <td>{{ $item->author }}</td>
+            <td>{{ $item->status }}</td>
+            <td>{{ $item->category_title }}</td>
+            <td>{{ $item->created_at }}</td>
+            <td>{{ $item->updated_at }}</td>
           </tr>
         @endforeach
 
