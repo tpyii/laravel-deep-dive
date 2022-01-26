@@ -1,7 +1,10 @@
 <x-layout>
     <x-slot name="title">Sign in</x-slot>
+
+    <x-errors />
     
     <form method="POST">
+        @csrf
 
         <x-form.input label="Login" name="login" value="admin" />
 

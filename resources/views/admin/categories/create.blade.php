@@ -1,7 +1,10 @@
 <x-admin.layout>
   <x-slot name="title">Create a Category</x-slot>
 
-  <form method="POST">
+  <x-errors />
+
+  <form method="POST" action="{{ route('admin.categories.store') }}">
+    @csrf
 
     <x-form.input label="Title" name="title" />
 
