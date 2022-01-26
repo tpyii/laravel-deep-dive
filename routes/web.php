@@ -25,13 +25,17 @@ Route::view('signin', 'signin')->name('signin');
 
 Route::resource('categories', CategoriesController::class);
 
-Route::resource('news', NewsController::class);
+Route::resource('news', NewsController::class)->parameters([
+    'news' => 'new:slug',
+])->shallow();
 
-Route::resource('category.news', NewsController::class)->shallow();
+Route::resource('category.news', NewsController::class)->parameters([
+    'category' => 'category:slug?',
+])->shallow();
 
 Route::group([
     'prefix' => 'feedback',
-    'as' => 'feedback.'
+    'as' => 'feedback.',
 ], function()
 {
     Route::get('/', [FeedbackController::class, 'create'])->name('create');
@@ -41,14 +45,13 @@ Route::group([
 
 Route::group([
     'prefix' => 'order',
-    'as' => 'order.'
+    'as' => 'order.',
 ], function()
 {
     Route::get('/', [OrderController::class, 'create'])->name('create');
     
     Route::post('/', [OrderController::class, 'store'])->name('store');
 });
-
 
 Route::group([
     'prefix' => 'admin',
@@ -57,7 +60,11 @@ Route::group([
 {
     Route::view('/', 'admin.welcome')->name('welcome');
 
-    Route::resource('categories', AdminCategoriesController::class);
+    Route::resource('categories', AdminCategoriesController::class)->parameters([
+        'categories' => 'category:slug',
+    ]);
 
-    Route::resource('news', AdminNewsController::class);
+    Route::resource('news', AdminNewsController::class)->parameters([
+        'news' => 'new:slug',
+    ]);
 });

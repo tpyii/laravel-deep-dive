@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {
@@ -15,10 +16,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = new Category();
-
         return view('admin.categories.index', [
-            'categories' => $categories->getCategoriesAdmin(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -40,51 +39,60 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->only([
+            'title',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $data['slug'] = Str::slug($data['title']);
+
+        return Category::create($data)
+            ? redirect()->route('admin.categories.index')->with('success', 'Success')
+            : back()->withInput()->withErrors('Unexpected error');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', [
+            'item' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->only([
+            'title',
+        ]);
+
+        $data['slug'] = Str::slug($data['title']);
+
+        return $category->update($data)
+            ? redirect()->route('admin.categories.index')->with('success', 'Success')
+            : back()->withInput()->withErrors('Unexpected error');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        return $category->delete()
+            ? redirect()->route('admin.categories.index')->with('success', 'Success')
+            : back()->withInput()->withErrors('Unexpected error');
     }
 }
