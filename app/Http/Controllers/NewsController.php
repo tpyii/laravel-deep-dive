@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -12,10 +13,14 @@ class NewsController extends Controller
      * @param int $category
      * @return \Illuminate\Http\Response
      */
-    public function index(int $category = null)
+    public function index(string $category_slug = null)
     {
+        $news = new News();
+
+        $news = $category_slug ? $news->getNewsByCategorySlug($category_slug) : $news->getNews();
+
         return view('news.index', [
-            'news' => $category ? $this->getNewsByCategoryId($category) : $this->getNews(),
+            'news' => $news,
         ]);
     }
 
@@ -46,10 +51,12 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(string $slug)
     {
+        $news = new News();
+
         return view('news.show', [
-            'item' => $this->getNewsById($id),
+            'item' => $news->getNewsBySlug($slug),
         ]);
     }
 
