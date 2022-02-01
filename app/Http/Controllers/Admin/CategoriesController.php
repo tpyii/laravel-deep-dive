@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoriesRequest;
 
 class CategoriesController extends Controller
 {
@@ -34,18 +33,14 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CategoriesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
-        $data = $request->only([
-            'title',
-        ]);
+        $validated = $request->validated();
 
-        $data['slug'] = Str::slug($data['title']);
-
-        return Category::create($data)
+        return Category::create($validated)
             ? redirect()->route('admin.categories.index')->with('success', 'Success')
             : back()->withInput()->withErrors('Unexpected error');
     }
@@ -66,19 +61,15 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CategoriesRequest  $request
      * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoriesRequest $request, Category $category)
     {
-        $data = $request->only([
-            'title',
-        ]);
+        $validated = $request->validated();
 
-        $data['slug'] = Str::slug($data['title']);
-
-        return $category->update($data)
+        return $category->update($validated)
             ? redirect()->route('admin.categories.index')->with('success', 'Success')
             : back()->withInput()->withErrors('Unexpected error');
     }
