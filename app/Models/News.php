@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,54 +9,33 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $table = 'news';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'category_id',
+        'title',
+        'slug',
+        'description',
+        'body',
+    ];
 
     /**
-     * 
-     * @return \Illuminate\Support\Collection
+     * The relationships that should always be loaded.
+     *
+     * @var array
      */
-    public function getNews()
-    {
-        return DB::table($this->table)
-                ->select('title', 'slug', 'description', 'image', 'created_at')
-                ->get();
-    }
+    protected $with = [
+        'category',
+    ];
 
     /**
-     * 
-     * @return \Illuminate\Support\Collection
+     * Get the category for the blog news.
      */
-    public function getNewsAdmin()
+    public function category()
     {
-        return DB::table($this->table)
-                ->select('news.id', 'news.title', 'news.description', 'news.author', 'news.status', 'categories.title as category_title', 'news.created_at', 'news.updated_at')
-                ->join('categories', 'categories.id', '=', 'news.category_id')
-                ->get();
-    }
-
-    /**
-     * 
-     * @return \Illuminate\Support\Collection
-     */
-    public function getNewsBySlug(string $slug)
-    {
-        return DB::table($this->table)
-                ->select('news.title', 'news.body', 'categories.title as category_title', 'categories.slug as category_slug')
-                ->join('categories', 'categories.id', '=', 'news.category_id')
-                ->where('news.slug', $slug)
-                ->first();
-    }
-
-    /**
-     * 
-     * @return \Illuminate\Support\Collection
-     */
-    public function getNewsByCategorySlug(string $slug)
-    {
-        return DB::table($this->table)
-                ->select('news.title', 'news.slug', 'news.description', 'news.image', 'news.created_at')
-                ->join('categories', 'categories.id', '=', 'news.category_id')
-                ->where('categories.slug', $slug)
-                ->get();
+        return $this->belongsTo(Category::class);
     }
 }

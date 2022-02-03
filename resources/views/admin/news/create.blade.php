@@ -12,6 +12,8 @@
 
         <x-form.input type="textarea" label="Body" name="body" />
 
+        <x-form.input type="select" label="Category" name="category_id" :options="$categories" />
+
         <button type="submit" class="btn btn-primary">Save</button>
 
     </form>

@@ -4,31 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'categories';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+    ];
 
     /**
-     * 
-     * @return \Illuminate\Support\Collection
+     * Get the news for the blog category.
      */
-    public function getCategories()
+    public function news()
     {
-        return DB::table($this->table)
-                ->select('title', 'slug')
-                ->get();
-    }
-
-    /**
-     * 
-     * @return \Illuminate\Support\Collection
-     */
-    public function getCategoriesAdmin()
-    {
-        return DB::table($this->table)->get();
+        return $this->hasMany(News::class);
     }
 }

@@ -5,6 +5,8 @@
     <a href="{{ route('admin.news.create') }}" type="button" class="btn btn-sm btn-outline-secondary">Create</a>
   </x-slot>
 
+  <x-success />
+
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
@@ -17,6 +19,7 @@
           <th scope="col">Category</th>
           <th scope="col">Created at</th>
           <th scope="col">Updated at</th>
+          <th scope="col">Options</th>
         </tr>
       </thead>
       <tbody>
@@ -28,9 +31,19 @@
             <td>{{ $item->description }}</td>
             <td>{{ $item->author }}</td>
             <td>{{ $item->status }}</td>
-            <td>{{ $item->category_title }}</td>
+            <td>{{ $item->category->title }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>
+            <td>
+              <div class="btn-group">
+                <a type="button" class="btn btn-sm btn-outline-success" href="{{ route('admin.news.edit', $item)}}">Edit</a>
+                <form method="POST" action="{{ route('admin.news.destroy', $item) }}" class="btn-group mx-0">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </div>
+            </td>
           </tr>
         @endforeach
 

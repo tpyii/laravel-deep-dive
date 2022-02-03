@@ -2,7 +2,8 @@
   'type' => 'text',
   'value' => '',
   'name',
-  'label'
+  'label',
+  'options',
 ])
 
 @switch($type)
@@ -17,6 +18,20 @@
     <div class="mb-3">
       <label for="{{ $name }}" class="form-label">{{ $label }}</label>
       <textarea class="form-control" id="{{ $name }}" name="{{ $name }}" rows="3">{{ old($name, $value) }}</textarea>
+    </div>
+    @break
+
+  @case('select')
+    <div class="mb-3">
+      <label for="{{ $name }}" class="form-label">{{ $label }}</label>
+      <select class="form-select" id="{{ $name }}" name="{{ $name }}">
+        <option></option>
+        @foreach ($options as $option)
+          <option value="{{ $option->id }}" {{ old($name, $value) == $option->id ? "selected" : '' }}>
+            {{ $option->title }}
+          </option>
+        @endforeach
+      </select>
     </div>
     @break
 
