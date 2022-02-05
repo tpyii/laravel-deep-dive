@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriesRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,20 +25,8 @@ class CategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:255', 'unique:categories'],
-            'slug' => ['required_with:title', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(auth()->user())],
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'slug' => Str::slug($this->title),
-        ]);
     }
 }
