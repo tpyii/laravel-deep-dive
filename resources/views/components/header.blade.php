@@ -36,6 +36,14 @@
               @endif
             @else
 
+              @if (auth()->user()->is_admin)
+
+                @if (Route::has('admin.welcome'))
+                  <li><a href="{{ route('admin.welcome') }}" class="text-white">Dashboard</a></li>
+                @endif
+
+              @endif
+
               @if (Route::has('profile.edit'))
                 <li><a href="{{ route('profile.edit') }}" class="text-white">Profile</a></li>
               @endif

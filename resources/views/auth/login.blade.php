@@ -20,5 +20,17 @@
             </a>
         @endif
 
+        @if (Route::has('auth.redirect'))
+            <a class="btn btn-link" href="{{ route('auth.redirect', ['network' => 'vkontakte']) }}">
+                Login with Vkontakte
+            </a>
+        @endif
+
+        @if (Route::has('auth.redirect'))
+            <a class="btn btn-link" href="{{ route('auth.redirect', ['network' => 'facebook']) }}">
+                Login with Facebook
+            </a>
+        @endif
+
     </form>
 </x-layout>

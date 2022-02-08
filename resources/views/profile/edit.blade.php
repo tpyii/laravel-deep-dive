@@ -5,6 +5,10 @@
 
     <x-errors />
 
+    @if ($item->avatar)
+        <img src="{{ $item->avatar }}" class="img-thumbnail mb-3" alt="">
+    @endif
+
     <form method="POST" action="{{ route('profile.update') }}">
         @csrf
         @method('PUT')

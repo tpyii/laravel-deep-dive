@@ -7,8 +7,10 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +83,19 @@ Route::group([
     ]);
 
     Route::resource('users', UsersController::class);
+
+    Route::get('parser', ParserController::class)->name('parser');
+});
+
+Route::group([
+    'prefix' => 'auth',
+    'as' => 'auth.',
+    'middleware' => 'guest',
+], function ()
+{
+    Route::get('{network}/redirect', [SocialController::class, 'redirect'])->name('redirect');
+
+    Route::get('{network}/callback', [SocialController::class, 'callback'])->name('callback');
 });
 
 Auth::routes();
