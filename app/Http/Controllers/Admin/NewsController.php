@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\News;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsRequest;
 use App\Models\Category;
 
 class NewsController extends Controller
@@ -37,21 +36,14 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\NewsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsRequest $request)
     {
-        $data = $request->only([
-            'title',
-            'description',
-            'body',
-            'category_id'
-        ]);
+        $validated = $request->validated();
 
-        $data['slug'] = Str::slug($data['title']);
-
-        return News::create($data)
+        return News::create($validated)
             ? redirect()->route('admin.news.index')->with('success', 'Success')
             : back()->withInput()->withErrors('Unexpected error');
     }
@@ -73,22 +65,15 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\NewsRequest  $request
      * @param  \App\Models\News $new
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $new)
+    public function update(NewsRequest $request, News $new)
     {
-        $data = $request->only([
-            'title',
-            'description',
-            'body',
-            'category_id'
-        ]);
+        $validated = $request->validated();
 
-        $data['slug'] = Str::slug($data['title']);
-
-        return $new->update($data)
+        return $new->update($validated)
             ? redirect()->route('admin.news.index')->with('success', 'Success')
             : back()->withInput()->withErrors('Unexpected error');
     }
