@@ -46,4 +46,6 @@
       </tbody>
     </table>
   </div>
+
+  {{ $users->links() }}
 </x-admin.layout>

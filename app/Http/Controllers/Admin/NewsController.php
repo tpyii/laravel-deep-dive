@@ -6,6 +6,7 @@ use App\Models\News;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsRequest;
 use App\Models\Category;
+use App\Services\Upload;
 
 class NewsController extends Controller
 {
@@ -17,7 +18,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('admin.news.index', [
-            'news' => News::all(),
+            'news' => News::paginate(),
         ]);
     }
 
@@ -36,12 +37,17 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\NewsRequest  $request
+     * @param  \App\Http\Requests\NewsRequest  $request
+     * @param  \App\Services\Upload $uploader
      * @return \Illuminate\Http\Response
      */
-    public function store(NewsRequest $request)
+    public function store(NewsRequest $request, Upload $uploader)
     {
         $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $uploader->upload($request->file('image'), 'news', 'public');
+        }
 
         return News::create($validated)
             ? redirect()->route('admin.news.index')->with('success', 'Success')
@@ -67,11 +73,16 @@ class NewsController extends Controller
      *
      * @param  \App\Http\Requests\NewsRequest  $request
      * @param  \App\Models\News $new
+     * @param  \App\Services\Upload $uploader
      * @return \Illuminate\Http\Response
      */
-    public function update(NewsRequest $request, News $new)
+    public function update(NewsRequest $request, News $new, Upload $uploader)
     {
         $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $uploader->upload($request->file('image'), 'news', 'public');
+        }
 
         return $new->update($validated)
             ? redirect()->route('admin.news.index')->with('success', 'Success')

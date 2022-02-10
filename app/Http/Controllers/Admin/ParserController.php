@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Source;
+use App\Jobs\ParsingSource;
 use App\Http\Controllers\Controller;
-use App\Services\YandexNewsRss;
 
 class ParserController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  App\Services\YandexNewsRss  $rss
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(YandexNewsRss $rss)
+    public function __invoke()
     {
-        dd($rss->parse('computers.rss'));
+        Source::all()->each(function ($item) {
+            ParsingSource::dispatch($item);
+        });
+
+        return redirect()->route('admin.sources.index')->with('success', 'Success');
     }
 }

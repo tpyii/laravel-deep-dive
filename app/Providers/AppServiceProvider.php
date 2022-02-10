@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Services\CbrRss;
 use App\Contracts\Parser;
 use App\Contracts\Social;
-use App\Services\CbrRss;
 use App\Services\SocialAuth;
 use App\Services\YandexNewsRss;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Paginator::useBootstrap();
     }
 }

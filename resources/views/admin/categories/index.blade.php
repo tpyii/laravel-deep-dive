@@ -42,4 +42,6 @@
       </tbody>
     </table>
   </div>
+
+  {{ $categories->links() }}
 </x-admin.layout>

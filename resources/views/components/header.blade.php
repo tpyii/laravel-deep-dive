@@ -18,14 +18,6 @@
               <li><a href="{{ route('categories.index') }}" class="text-white">Categories</a></li>
             @endif
 
-            @if (Route::has('order.create'))
-              <li><a href="{{ route('order.create') }}" class="text-white">Create an Order</a></li>
-            @endif
-            
-            @if (Route::has('feedback.create'))
-              <li><a href="{{ route('feedback.create') }}" class="text-white">Feedback</a></li>
-            @endif
-
             @guest
               @if (Route::has('login'))
                 <li><a href="{{ route('login') }}" class="text-white">Login</a></li>

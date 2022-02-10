@@ -15,7 +15,7 @@ class NewsController extends Controller
      */
     public function index(Category $category = null)
     {
-        $news = $category ? $category->news()->get() : News::all();
+        $news = $category ? $category->news()->paginate() : News::paginate();
 
         return view('news.index', [
             'news' => $news,

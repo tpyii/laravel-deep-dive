@@ -1,5 +1,13 @@
 <x-layout>
     <x-slot name="title">{{ $item->title }}</x-slot>
+
+    <div class="mb-3">
+        @if (Storage::disk('public')->exists($item->image))
+            <img src="{{ asset('storage/' . $item->image) }}" alt="">
+        @elseif ($item->image)
+            <img src="{{ $item->image }}" alt="">
+        @endif
+    </div>
     
     {!! $item->body !!}
     

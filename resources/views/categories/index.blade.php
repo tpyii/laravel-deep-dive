@@ -10,4 +10,6 @@
     @endforeach
 
   </div>
+
+  {{ $categories->links() }}
 </x-layout>

@@ -8,11 +8,11 @@ abstract class Parser
 {
     /**
      * 
-     * @param string $filename
+     * @param string $url
      * @return array
      */
-    public function parse(string $filename): array
+    public function parse(string $url): array
     {
-        return XmlParser::load($this->url . $filename)->parse($this->schema());
+        return XmlParser::load($url)->parse($this->schema());
     }
 }

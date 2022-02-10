@@ -38,6 +38,15 @@
         </li>
       @endif
 
+      @if (Route::has('admin.sources.index'))
+        <li class="nav-item">
+          <a class="nav-link @if (request()->routeIs('admin.sources.*')) active @endif" href="{{ route('admin.sources.index') }}">
+            <span data-feather="layers"></span>
+            Sources
+          </a>
+        </li>
+      @endif
+
     </ul>
   </div>
 </nav>
