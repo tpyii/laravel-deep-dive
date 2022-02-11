@@ -6,12 +6,23 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.88.1">
+
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>{{ $title }} - News Aggregator</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
 
-  <!-- Bootstrap core CSS -->
-  <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- Scripts -->
+  <script src="{{ asset('js/app.js') }}" defer></script>
+
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+  <!-- Styles -->
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
   <style>
     .bd-placeholder-img {
@@ -53,9 +64,7 @@
 
 </main>
 
-<x-footer />
-
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>      
+<x-footer /> 
 
 </body>
 </html>

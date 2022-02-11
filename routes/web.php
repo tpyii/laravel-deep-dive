@@ -7,6 +7,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +21,7 @@ use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController
 |
 */
 
-Route::view('/', 'welcome')->name('welcome');
-
-Route::view('signin', 'signin')->name('signin');
+Route::view('/', 'home')->name('home');
 
 Route::resource('categories', CategoriesController::class);
 
@@ -54,8 +54,20 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'profile',
+    'as' => 'profile.',
+    'middleware' => 'auth',
+], function()
+{
+    Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+
+    Route::put('/', [ProfileController::class, 'update'])->name('update');
+});
+    
+Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
+    'middleware' => ['auth', 'is.admin'],
 ], function ()
 {
     Route::view('/', 'admin.welcome')->name('welcome');
@@ -67,4 +79,8 @@ Route::group([
     Route::resource('news', AdminNewsController::class)->parameters([
         'news' => 'new:slug',
     ]);
+
+    Route::resource('users', UsersController::class);
 });
+
+Auth::routes();
