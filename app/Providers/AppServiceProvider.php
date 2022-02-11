@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Contracts\Parser;
+use App\Contracts\Social;
+use App\Services\CbrRss;
+use App\Services\SocialAuth;
+use App\Services\YandexNewsRss;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Parser::class, YandexNewsRss::class);
+        $this->app->bind(Parser::class, CbrRss::class);
+        $this->app->bind(Social::class, SocialAuth::class);
     }
 
     /**
