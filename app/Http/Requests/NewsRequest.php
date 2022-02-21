@@ -25,11 +25,12 @@ class NewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:news',
-            'slug' => 'required_with:title|max:255',
-            'description' => 'required|max:255',
-            'body' => 'required',
-            'category_id' => 'required|integer|numeric|exists:categories,id',
+            'title' => ['required', 'max:255'],
+            'slug' => ['required_with:title', 'max:255'],
+            'description' => ['required', 'max:255'],
+            'body' => ['required'],
+            'category_id' => ['required', 'integer', 'numeric', 'exists:categories,id'],
+            'image' => ['nullable', 'image'],
         ];
     }
 

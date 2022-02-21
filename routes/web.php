@@ -2,15 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Admin\SourcesController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
-use App\Http\Controllers\Admin\ParserController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,26 +33,6 @@ Route::resource('news', NewsController::class)->parameters([
 Route::resource('category.news', NewsController::class)->parameters([
     'category' => 'category:slug?',
 ])->shallow();
-
-Route::group([
-    'prefix' => 'feedback',
-    'as' => 'feedback.',
-], function()
-{
-    Route::get('/', [FeedbackController::class, 'create'])->name('create');
-    
-    Route::post('/', [FeedbackController::class, 'store'])->name('store');
-});
-
-Route::group([
-    'prefix' => 'order',
-    'as' => 'order.',
-], function()
-{
-    Route::get('/', [OrderController::class, 'create'])->name('create');
-    
-    Route::post('/', [OrderController::class, 'store'])->name('store');
-});
 
 Route::group([
     'prefix' => 'profile',
@@ -85,6 +64,8 @@ Route::group([
     Route::resource('users', UsersController::class);
 
     Route::get('parser', ParserController::class)->name('parser');
+
+    Route::resource('sources', SourcesController::class);
 });
 
 Route::group([

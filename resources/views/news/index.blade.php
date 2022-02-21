@@ -6,7 +6,12 @@
     @foreach ($news as $item)
       <div class="col">
         <div class="card shadow-sm">
-          <img src="{{ $item->image }}" alt="">
+
+          @if (Storage::disk('public')->exists($item->image))
+            <img src="{{ asset('storage/' . $item->image) }}" alt="">
+          @elseif ($item->image)
+            <img src="{{ $item->image }}" alt="">
+          @endif
 
           <div class="card-body">
             <p><strong>{{ $item->title }}</strong></p>
@@ -23,4 +28,6 @@
     @endforeach
     
   </div>
+
+  {{ $news->links() }}
 </x-layout>

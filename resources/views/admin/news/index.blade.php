@@ -50,4 +50,6 @@
       </tbody>
     </table>
   </div>
+
+  {{ $news->links() }}
 </x-admin.layout>

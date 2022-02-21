@@ -6,13 +6,11 @@ use App\Contracts\Parser;
 
 class YandexNewsRss extends Parser
 {
-    protected string $url = 'https://news.yandex.ru/';
-
     /**
      * 
      * @return array
      */
-    public function schema(): array
+    protected function schema(): array
     {
         return [
             'title' => [

@@ -6,13 +6,11 @@ use App\Contracts\Parser;
 
 class CbrRss extends Parser
 {
-    protected string $url = 'https://www.cbr-xml-daily.ru/';
-
     /**
      * 
      * @return array
      */
-    public function schema(): array
+    protected function schema(): array
     {
         return [
             'valutes' => [
